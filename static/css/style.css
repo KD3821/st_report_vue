@@ -1,0 +1,13 @@
+.my_table {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.my_user {
+  text-align: right;
+  margin: 15px 20px;
+}
+.ride_table th, .ride_table td {
+  padding: 10px;
+  border-bottom: 1px solid grey;
+}
