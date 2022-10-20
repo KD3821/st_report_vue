@@ -11,3 +11,9 @@
   padding: 10px;
   border-bottom: 1px solid grey;
 }
+.page_btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 5px;
+}
