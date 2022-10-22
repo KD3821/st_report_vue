@@ -14,7 +14,7 @@
         Коммент: {{ ride.comment }}<br>
       </div>
     </div>
-    <Bottom :btn_1=button1 :btn_2=button2 />
+    <Bottom :btn_1=button1 :btn_2=button2 :link_1=link_edit :link_2=link_delete />
   </div>
 </template>
 
@@ -32,7 +32,9 @@ export default {
     return {
       ride: ride.data,
       button1: 'Корректировка заказа',
-      button2: 'Удалить заказ'
+      button2: 'Удалить заказ',
+      link_edit: `/rides/ride_edit`,
+      link_delete: '/rides_all'
     }
   }
 }

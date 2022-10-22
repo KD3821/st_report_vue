@@ -2,46 +2,43 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8 mx-auto">
-        <h3>Редактирование заказа {{ ride.number }}:</h3>
+        <h3>Редактирование заказа XX:</h3>
         <form name="contact-form">
           <div class="mb-3">
-            <input type="text" id="number" class="form-control" v-model="form.number">
-            <input type="text" id="car" class="form-control" v-model="form.car">
-            <input type="text" id="driver" class="form-control" v-model="form.driver">
-            <input type="text" id="shift" class="form-control" v-model="form.shift">
-            <input type="text" id="price" class="form-control" v-model="form.price">
-            <input type="text" id="cash" class="form-control" v-model="form.cash">
-            <input type="text" id="toll" class="form-control" v-model="form.toll">
-            <input type="text" id="extra_tax" class="form-control" v-model="form.extra_tax">
-            <input type="text" id="tip" class="form-control" v-model="form.tip">
-            <input type="text" id="comment" class="form-control" v-model="form.comment">
+            <input type="text" id="user" class="form-control" v-model="form.user" placeholder="USER">
+            <input type="text" id="id" class="form-control" v-model="form.id" placeholder="ID">
+            <input type="text" id="number" class="form-control" v-model="form.number" placeholder="Номер">
+            <input type="text" id="car" class="form-control" v-model="form.car" placeholder="Авто">
+            <input type="text" id="driver" class="form-control" v-model="form.driver" placeholder="Водитель">
+            <input type="text" id="price" class="form-control" v-model="form.price" placeholder="Стоимость">
+            <input type="text" id="cash" class="form-control" v-model="form.cash" placeholder="Нал">
+            <input type="text" id="toll" class="form-control" v-model="form.toll" placeholder="ЗСД">
+            <input type="text" id="tip" class="form-control" v-model="form.tip" placeholder="Чаевые">
+            <input type="text" id="comment" class="form-control" v-model="form.comment" placeholder="Комментарий">
           </div>
           <button class="btn btn-primary" type="submit" @click.prevent="submitForm" :disabled="!isComplete">Сохранить</button>
         </form>
       </div>
     </div>
-    <Bottom />
   </div>
 </template>
 
 
 <script>
 import axios from "axios";
-import Bottom from "@/components/Bottom";
 export default {
-  components: {Bottom},
   layout: "ride_detail",
   data() {
     return {
       form: {
+        user: '',
+        id: '',
         number: '',
         car: '',
         driver: '',
-        shift: '',
         price: '',
         cash: '',
         toll: '',
-        extra_tax: '',
         tip: '',
         comment: '',
       }
@@ -50,9 +47,11 @@ export default {
   methods: {
     submitForm() {
       let rideFormData = new FormData();
+      rideFormData.set('user', this.form.user);
+      rideFormData.set('id', this.form.id);
       rideFormData.set('number', this.form.number);
       rideFormData.set('car', this.form.car);
-      rideFormData.set('drivr', this.form.driver);
+      rideFormData.set('driver', this.form.driver);
       rideFormData.set('shift', this.form.shift);
       rideFormData.set('price', this.form.price);
       rideFormData.set('cash', this.form.cash);
@@ -63,14 +62,19 @@ export default {
       console.log('submitting data...');
       axios({
         method: 'patch',
-        url: `http://127.0.0.1:8000/rides/${this.form.number}`,
+        url: `http://127.0.0.1:8000/rides/${this.form.id}/`,
         data: rideFormData
       }).then(function (response){
         console.log(response);
       }).catch(function (response){
         console.log(response);
       });
-      this.$router.push("/success");
+      this.$router.push(`/rides/${this.form.id}/`);
+    }
+  },
+  computed: {
+    isComplete() {
+      return this.form.id && this.form.number && this.form.price;
     }
   }
 }

@@ -21,7 +21,7 @@
           </tr>
           <tr v-for="ride in rides" :key="ride.id">
             <td>{{ride.shift.date}}</td>
-            <td><nuxt-link :to="`/rides/${ride.id}/`">{{ride.number}}</nuxt-link></td>
+            <td><nuxt-link :to="`/rides/${ride.id}`">{{ride.number}}</nuxt-link></td>
             <td>{{ride.price}}</td>
             <td>{{ride.cash}}</td>
             <td>{{ride.driver}}</td>
@@ -37,7 +37,7 @@
         </table>
       </div>
     </div>
-    <Bottom :btn_1=prev_page :btn_2=next_page />
+    <Bottom :btn_1=prev_page :btn_2=next_page :link_1=p_link :link_2=n_link />
   </div>
 
 </template>
@@ -54,7 +54,10 @@ export default {
     return {
       rides: data.results,
       prev_page: '<<<',
-      next_page: '>>>'
+      next_page: '>>>',
+      p_link: data.previous,
+      n_link: data.next
+
     }
   }
 }
