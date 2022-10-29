@@ -64,9 +64,9 @@ export default {
         method: 'patch',
         url: `http://127.0.0.1:8000/rides/${this.form.id}/`,
         data: rideFormData
-      }).then(function (response){
+      }).then(function (response) {
         console.log(response);
-      }).catch(function (response){
+      }).catch(function (response) {
         console.log(response);
       });
       this.$router.push(`/rides/${this.form.id}/`);

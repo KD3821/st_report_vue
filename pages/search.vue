@@ -1,8 +1,9 @@
 <template>
   <div>
+    <SearchField @searchRides="rides = $event"/>
     <div class="row">
       <div class="col-md-11 mx-auto mb-3">
-        <h3>Все заказы:</h3>
+        <h3>Всего найдено заказов: {{ count }}</h3>
         <table class="ride_table">
           <tbody>
           <tr>
@@ -39,28 +40,31 @@
     </div>
     <Bottom :btn_1=prev_page :btn_2=next_page :link_1=p_link :link_2=n_link />
   </div>
-
 </template>
+
 
 <script>
 import axios from "axios";
 import Bottom from "@/components/Bottom";
+import SearchField from "@/components/SearchField";
 export default {
-  components: {
-    Bottom,
+  components: {Bottom, SearchField},
+  watchQuery: ['q'],
+  data() {
+    return {
+      rides: ''
+    }
   },
-  async asyncData(ctx) {
-    const {data} = await axios.get(`http://127.0.0.1:8000/rides/?page=1`);
+  async asyncData({route}) {
+    const {data} = await axios.get(`http://127.0.0.1:8000/rides/?search=${route.query.q}`);
     return {
       rides: data.results,
-      prev_page: '<<<',
-      next_page: '>>>',
-      p_link: data.previous,
-      n_link: data.next
+      count: data.count
     }
   }
 }
 </script>
+
 
 <style>
 

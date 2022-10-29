@@ -28,7 +28,7 @@ export default {
   },
   layout: "ride_detail",
   async asyncData({params}) {
-    const ride = await axios.get(`http://127.0.0.1:8000/rides/${params.id}`);
+    const ride = await axios.get(`http://127.0.0.1:8000/rides/${params.id}/`);
     return {
       ride: ride.data,
       button1: 'Корректировка заказа',
