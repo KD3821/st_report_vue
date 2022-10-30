@@ -58,9 +58,9 @@ export default {
           maxAge: 60 * 60 * 24 * 30
         },
         endpoints: {
-          login: { url: '/login/', method: 'post' },
-          refresh: { url: '/api/refresh_token/', method: 'post' },
-          user: { url: '/api/profile/', method: 'get' },
+          login: { url: '/token/', method: 'post' },
+          refresh: { url: '/token/refresh/', method: 'post'},
+          user: { url: '/profile/', method: 'get' },
           logout: false
         },
         tokenRequired: true,

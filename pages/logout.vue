@@ -4,7 +4,9 @@
 
 <script>
 export default {
-  name: "logout"
+  async created() {
+    await this.$auth.logout()
+  }
 }
 </script>
 

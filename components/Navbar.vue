@@ -6,27 +6,32 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-        <form class="d-flex">
+        <form class="d-flex" style="align-items: center">
           <input name="q" v-model="q" class="form-control me-2" type="text" placeholder="Поиск" aria-label="Search">
           <button class="btn btn-outline-secondary" type="submit" @click.stop.prevent="submit()">Найти</button>
         </form>
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item ">
-            <nuxt-link class="nav-link" to="/info">Инфо</nuxt-link>
-          </li>
-          <li class="nav-item ">
-            <nuxt-link class="nav-link" to="/change_pass" >Сменить пароль</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link" to="/logout" >Выход</nuxt-link>
-          </li>
-          <li class="nav-item ">
-            <nuxt-link class="nav-link" to="/signup" >Регистрация</nuxt-link>
-          </li>
-          <li class="nav-item">
-            <nuxt-link class="nav-link" to="/login" >Вход</nuxt-link>
-          </li>
+          <span v-if="loggedIn" style="display: flex">
+            <li class="nav-item ">
+              <nuxt-link class="nav-link" to="/info">Инфо</nuxt-link>
+            </li>
+            <li class="nav-item ">
+              <nuxt-link class="nav-link" to="/change_pass" >Сменить пароль</nuxt-link>
+            </li>
+            <li class="nav-item">
+              <nuxt-link class="nav-link" to="/logout" >Выход</nuxt-link>
+            </li>
+           </span>
+          <span v-else style="display: flex">
+            <li class="nav-item ">
+              <nuxt-link class="nav-link" to="/signup" >Регистрация</nuxt-link>
+            </li>
+            <li class="nav-item">
+              <nuxt-link class="nav-link" to="/login" >Вход</nuxt-link>
+            </li>
+          </span>
         </ul>
+
       </div>
     </div>
   </nav>
@@ -43,6 +48,14 @@ export default {
   methods: {
     submit(){
       this.$router.push("/search?q=" + this.q);
+    }
+  },
+  computed: {
+    loggedIn() {
+      return this.$auth.loggedIn
+    },
+    user() {
+      return this.$auth.user
     }
   }
 }
