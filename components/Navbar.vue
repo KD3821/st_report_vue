@@ -11,6 +11,7 @@
           <button class="btn btn-outline-secondary" type="submit" @click.stop.prevent="submit()">Найти</button>
         </form>
         <ul class="navbar-nav mr-auto">
+          <client-only>
           <span v-if="loggedIn" style="display: flex">
             <li class="nav-item ">
               <nuxt-link class="nav-link" to="/info">Инфо</nuxt-link>
@@ -21,7 +22,7 @@
             <li class="nav-item">
               <nuxt-link class="nav-link" to="/logout" >Выход</nuxt-link>
             </li>
-           </span>
+          </span>
           <span v-else style="display: flex">
             <li class="nav-item ">
               <nuxt-link class="nav-link" to="/signup" >Регистрация</nuxt-link>
@@ -30,6 +31,7 @@
               <nuxt-link class="nav-link" to="/login" >Вход</nuxt-link>
             </li>
           </span>
+          </client-only>
         </ul>
 
       </div>

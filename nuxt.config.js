@@ -61,7 +61,7 @@ export default {
           login: { url: '/token/', method: 'post' },
           refresh: { url: '/token/refresh/', method: 'post'},
           user: { url: '/profile/', method: 'get' },
-          logout: false
+          logout: { url: '/logout/', method: 'get' }
         },
         tokenRequired: true,
       }

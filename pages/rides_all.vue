@@ -1,42 +1,7 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-md-11 mx-auto mb-3">
-        <h3>Все заказы:</h3>
-        <table class="ride_table">
-          <tbody>
-          <tr>
-            <th>Дата заказа</th>
-            <th>Заказ: </th>
-            <th>Сумма: </th>
-            <th>Наличные: </th>
-            <th>Водитель: </th>
-            <th>А/М: </th>
-            <th>П-ка смены: </th>
-            <th>Доп.ком.: </th>
-            <th>Режим: </th>
-            <th>ЗСД: </th>
-            <th>Чаевые: </th>
-            <th>Коммент: </th>
-          </tr>
-          <tr v-for="ride in rides" :key="ride.id">
-            <td>{{ride.shift.date}}</td>
-            <td><nuxt-link :to="`/rides/${ride.id}`">{{ride.number}}</nuxt-link></td>
-            <td>{{ride.price}}</td>
-            <td>{{ride.cash}}</td>
-            <td>{{ride.driver}}</td>
-            <td>{{ride.car}}</td>
-            <td>{{ride.save_tax}}</td>
-            <td>{{ride.tax_result}}</td>
-            <td>{{ride.extra_tax.mode}}</td>
-            <td>{{ride.toll}}</td>
-            <td>{{ride.tip}}</td>
-            <td>{{ride.comment}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <button @click.prevent="showRides">FIRE</button>
+    <Rides v-bind:user="user" v-bind:rides="rides" />
     <Bottom :btn_1=prev_page :btn_2=next_page :link_1=p_link :link_2=n_link />
   </div>
 
@@ -44,20 +9,45 @@
 
 <script>
 import axios from "axios";
+import Rides from "@/components/Rides";
 import Bottom from "@/components/Bottom";
 export default {
   components: {
     Bottom,
+    Rides,
   },
-  async asyncData(ctx) {
-    const {data} = await axios.get(`http://127.0.0.1:8000/rides/?page=1`);
+  data() {
     return {
-      rides: data.results,
-      prev_page: '<<<',
-      next_page: '>>>',
-      p_link: data.previous,
-      n_link: data.next
+      rides: this.showRides()
     }
+  },
+  methods: {
+    async showRides() {
+      const {data} = await this.$axios.get(`/rides/`);
+      console.log(data.results)
+      return {
+        rides: data.results
+      }
+    }
+  },
+  // async asyncData(ctx) {
+  //   const {data} = await axios.get(`http://127.0.0.1:8000/rides/`);
+  //   console.log(data);
+  //   return {
+  //     rides: data.results,
+  //     prev_page: '<<<',
+  //     next_page: '>>>',
+  //     p_link: data.previous,
+  //     n_link: data.next
+  //   }
+  // },
+  computed: {
+    loggedIn() {
+      return this.$auth.loggedIn
+    },
+    user() {
+      return this.$auth.user
+    },
   }
 }
 </script>
